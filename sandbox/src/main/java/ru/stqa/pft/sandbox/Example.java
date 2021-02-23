@@ -5,23 +5,19 @@ public class Example {
         program("Java");
         program("JavaScript");
         program("C++");
-        double m = 5;
 
-        System.out.println("Площадь квадрата со стороной " + m + " = " + area(m));
+        Square s = new Square(5); //создали объект
 
-        double a = 2;
-        double b = 8;
-        System.out.println("Площадь прямоугольника со сторонами " + a + " и " + b + " = " + area(a, b));
+        System.out.println("Площадь квадрата со стороной " + s.l + " = " + s.area());
+
+        Rectangle r = new Rectangle(4, 6);
+        System.out.println("Площадь прямоугольника со сторонами " + r.a + " и " + r.b + " = " + r.area());
+
 
     }
     public static void program(String somebody) {
         System.out.println("Простая программа на " + somebody);
     }
-    public static double area(double l) {
-        return l * l;
-    }
-    public static double area(double a, double b) {
-        return a * b;
-    }
+
 }
 
