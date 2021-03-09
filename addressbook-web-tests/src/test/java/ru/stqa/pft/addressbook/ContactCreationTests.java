@@ -28,12 +28,11 @@ public class ContactCreationTests {
   }
 
   @Test
-  public void testUntitledTestCase() throws Exception {
+  public void testContactCreation() throws Exception {
     addNewContact();
     fillContactForm(new ContactData("Иван", "Иванович", "Иванов", "Ванька", "КиТ", "Москва, ул. Лесная, д. 7", "552233", "89632541789", "546987", "123654789", "ivan@mail.ru", "17", "August", "1990", "1", "Москва, ул. Ямская, д. 12, кв. 234"));
     saveContact();
     returnToHomePage();
-    exitingTheApplication();
   }
 
     private void addNewContact() {
@@ -98,10 +97,6 @@ public class ContactCreationTests {
     private void returnToHomePage() {
       wd.findElement(By.linkText("home")).click();
     }
-
-    private void exitingTheApplication() {
-    wd.findElement(By.linkText("Logout")).click();
-  }
 
   @AfterMethod(alwaysRun = true)
   public void tearDown() throws Exception {
