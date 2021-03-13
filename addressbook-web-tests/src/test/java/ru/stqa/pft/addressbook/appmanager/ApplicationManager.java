@@ -37,16 +37,16 @@ public class ApplicationManager {
       wd.findElement(By.name("new")).click();
     }
 
-    public void fillGroupForm(String name, String header, String footer) {
+    public void fillGroupForm(GroupData groupData) {
       wd.findElement(By.name("group_name")).click();
       wd.findElement(By.name("group_name")).clear();
-      wd.findElement(By.name("group_name")).sendKeys(name);
+      wd.findElement(By.name("group_name")).sendKeys(groupData.getName());
       wd.findElement(By.name("group_header")).click();
       wd.findElement(By.name("group_header")).clear();
-      wd.findElement(By.name("group_header")).sendKeys(header);
+      wd.findElement(By.name("group_header")).sendKeys(groupData.getHeader());
       wd.findElement(By.name("group_footer")).click();
       wd.findElement(By.name("group_footer")).clear();
-      wd.findElement(By.name("group_footer")).sendKeys(footer);
+      wd.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
     }
 
     public void submitGroupCreation() {
@@ -86,4 +86,5 @@ public class ApplicationManager {
     public void selectGroup() {
       wd.findElement(By.name("selected[]")).click();
     }
+
 }

@@ -20,4 +20,28 @@ public class ContactData {
         this.home = home;
         this.mobile = mobile;
     }
+    public String getFirstname () {
+        return firstname;
+    }
+    public String getMiddlename () {
+        return middlename;
+    }
+    public String getLastname () {
+        return lastname;
+    }
+    public String getNickname () {
+        return nickname;
+    }
+    public String getCompany () {
+        return company;
+    }
+    public String getAddress () {
+        return address;
+    }
+    public String getHome () {
+        return home;
+    }
+    public String getMobile () {
+        return mobile;
+    }
 }
