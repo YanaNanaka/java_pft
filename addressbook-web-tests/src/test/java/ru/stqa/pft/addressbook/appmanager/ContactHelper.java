@@ -12,8 +12,6 @@ public class ContactHelper extends HelperBase {
         super(wd);
     }
 
-    public void goToHomePage() {click(By.linkText("home")); }
-
     public void addNewContact() {
         click(By.linkText("add new"));
     }
