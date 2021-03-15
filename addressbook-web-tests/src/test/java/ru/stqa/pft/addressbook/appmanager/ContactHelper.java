@@ -12,12 +12,8 @@ public class ContactHelper extends HelperBase {
         super(wd);
     }
 
-    public void addNewContact() {
+    public void initContactCreation() {
         click(By.linkText("add new"));
-    }
-
-    public void click(By locator) {
-        wd.findElement(locator).click();
     }
 
     public void fillContactForm(ContactData contactData, boolean creation ) {
@@ -42,7 +38,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void returnToHomePage() {
-        click(By.linkText("home"));
+        click(By.linkText("home page"));
     }
 
     public void selectContact() {
@@ -60,5 +56,16 @@ public class ContactHelper extends HelperBase {
     public void deleteSelectedContact() {
         click(By.xpath("//input[@value='Delete']"));
         wd.switchTo().alert().accept();
+    }
+
+    public void createContact(ContactData contact, boolean creation) {
+        initContactCreation();
+        fillContactForm(contact, creation);
+        saveContact();
+        returnToHomePage();
+    }
+
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
     }
 }
