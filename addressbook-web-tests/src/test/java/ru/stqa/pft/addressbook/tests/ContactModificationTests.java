@@ -20,7 +20,7 @@ public class ContactModificationTests extends TestBase {
                     "3"), true);
         }
         int before = app.getContactHelper().getContactCount();
-        app.getContactHelper().selectContact();
+        app.getContactHelper().selectContact(before -1);
         app.getContactHelper().initContactModification();
         app.getContactHelper().fillContactForm(new ContactData("Василий", "Васильевич", "Васькин",
                 "Васька", "КоТ", "Москва, ул. Мясная, д. 77", "542563", "89636441754",
