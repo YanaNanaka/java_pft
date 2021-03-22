@@ -15,13 +15,13 @@ public class ContactModificationTests extends TestBase {
     public void ensurePreconditions() {
         app.goTo().GroupPage();
         if (app.group().list().size() == 0) {
-            app.group().create(new GroupData("3", "1", "2"));
+            app.group().create(new GroupData().withName("3"));
         }
         app.goTo().homePage();
         if (app.contact().list().size() == 0) {
-            app.contact().create(new ContactData("Иван", "Иванович", "Иванов",
-                    "Ванька", "КиТ", "Москва, ул. Лесная, д. 7", "552233", "89632541789",
-                    "1"), true);
+            app.contact().create(new ContactData().withFirstname("Иван").withMiddlename("Иванович").
+                    withLastname("Иванов").withNickname("Ванька").withCompany("КиТ").withAddress("Москва, ул. Лесная, д. 7").
+                    withHome("552233").withMobile("89632541789").withGroup("1"), true);
         }
     }
 
@@ -29,9 +29,9 @@ public class ContactModificationTests extends TestBase {
     public void testContactModification() {
         List<ContactData> before = app.contact().list();
         int index = before.size()-1;
-        ContactData contact = new ContactData(before.get(index).getId(),"Василий", "Васильевич", "Васькин",
-                "Васька", "КоТ", "Москва, ул. Мясная, д. 77", "542563", "89636441754",
-                "1");
+        ContactData contact = new ContactData().withId(before.get(index).getId()).withFirstname("Василий").withMiddlename("Васильевич").
+                withLastname("Васькин").withNickname("Ванька").withCompany("КоТ").withAddress("Москва, ул. Мясная, д. 77").
+                withHome("542563").withMobile("89636441754").withGroup("1");
         app.contact().modify(index, contact);
         List<ContactData> after = app.contact().list();
         Assert.assertEquals(after.size(), before.size());

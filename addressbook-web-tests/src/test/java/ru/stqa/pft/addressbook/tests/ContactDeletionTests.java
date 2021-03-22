@@ -14,13 +14,13 @@ public class ContactDeletionTests extends TestBase {
     public void ensurePreconditions() {
         app.goTo().GroupPage();
         if (app.group().list().size() == 0) {
-            app.group().create(new GroupData("1", "1", "2"));
+            app.group().create(new GroupData().withName("1"));
         }
         app.goTo().homePage();
         if (app.contact().list().size() == 0) {
-            app.contact().create(new ContactData("Иван", "Иванович", "Иванов",
-                    "Ванька", "КиТ", "Москва, ул. Лесная, д. 7", "552233", "89632541789",
-                    "1"), true);
+            app.contact().create(new ContactData().withFirstname("Иван").withMiddlename("Иванович").
+                    withLastname("Иванов").withNickname("Ванька").withCompany("КиТ").withAddress("Москва, ул. Лесная, д. 7").
+                    withHome("552233").withMobile("89632541789").withGroup("1"), true);
         }
     }
 
