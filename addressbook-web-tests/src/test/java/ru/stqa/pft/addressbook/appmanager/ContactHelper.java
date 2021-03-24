@@ -93,7 +93,7 @@ public class ContactHelper extends HelperBase {
             return isElementPresent(By.name("selected[]"));
         }
 
-        public int getContactCount () {
+        public int сount () {
             return wd.findElements(By.xpath("//img[@alt='Edit']")).size();
         }
 
