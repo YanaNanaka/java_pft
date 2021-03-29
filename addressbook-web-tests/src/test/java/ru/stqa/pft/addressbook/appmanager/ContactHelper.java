@@ -54,7 +54,7 @@ public class ContactHelper extends HelperBase {
 
 
     public void initContactModificationById(int id) {
-        wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
+        wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
     }
 
     public void submitContactModification () {
@@ -109,10 +109,25 @@ public class ContactHelper extends HelperBase {
                 int id = Integer.parseInt(row.findElement(By.cssSelector("td:nth-child(1) input")).getAttribute("value"));
                 String firstname = row.findElement(By.cssSelector("td:nth-child(3)")).getText();
                 String lastname = row.findElement(By.cssSelector("td:nth-child(2)")).getText();
-                contactCashe.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname));
+                String allPhones = row.findElement(By.cssSelector("td:nth-child(6)")).getText();
+                //String[] phones = allPhones.split("\n");
+                contactCashe.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
+                        //.withHome(phones[0]).withMobile(phones[1]));
+                        .withAllPhones(allPhones));
             }
             return new Contacts(contactCashe);
         }
+
+    public ContactData infoFromEditForm(ContactData contact) {
+            initContactModificationById(contact.getId());
+            String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
+            String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+            String home = wd.findElement(By.name("home")).getAttribute("value");
+            String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+            wd.navigate().back();
+            return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
+                    .withHome(home).withMobile(mobile);
+    }
 }
 
 
