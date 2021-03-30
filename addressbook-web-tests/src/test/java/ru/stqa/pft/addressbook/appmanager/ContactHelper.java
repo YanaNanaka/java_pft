@@ -32,12 +32,14 @@ public class ContactHelper extends HelperBase {
         type(By.name("email"), contactData.getEmail());
         attach(By.name("photo"), contactData.getPhoto());
 
-        if (creation) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        if (creation){
+            if (contactData.getGroup() != null) {
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
-        }
-    }
+        }}
+
 
     public void saveContact() {
         click(By.xpath("(//input[@name='submit'])[2]"));
