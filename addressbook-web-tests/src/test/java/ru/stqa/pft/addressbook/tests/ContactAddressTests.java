@@ -15,7 +15,7 @@ public class ContactAddressTests extends  TestBase {
         if (app.contact().all().size() == 0) {
             app.contact().create(new ContactData().withFirstname("Иван").withMiddlename("Иванович").
                     withLastname("Иванов").withNickname("Ванька").withCompany("КиТ").withAddress("Москва, ул. Лесная, д. 7").
-                    withHome("552233").withMobile("89632541789").withGroup("1").withEmail("sd@.ru").withEmail2("dfhd@.com"), true);
+                    withHome("552233").withMobile("89632541789").withWork("124596").withGroup("1").withEmail("sd@.ru").withEmail2("dfhd@.com").withEmail3("dffed@.com"), true);
         }
     }
     @Test

@@ -23,11 +23,13 @@ public class ContactData {
     private String home;
     @Expose
     private String mobile;
+    private String work;
     private String group;
     @Expose
     private String email;
     @Expose
     private String email2;
+    private String email3;
     private String allMails;
     private File photo;
 
@@ -109,9 +111,13 @@ public class ContactData {
     public String getMobile () {
         return mobile;
     }
+    public String getWork () {
+        return work;
+    }
     public String getGroup() { return group; }
     public String getEmail() { return email; }
     public String getEmail2() { return email2; }
+    public String getEmail3() { return email3; }
 
     public ContactData withAllMails(String allMails) {
         this.allMails = allMails;
@@ -163,6 +169,11 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withWork(String work) {
+        this.work = work;
+        return this;
+    }
+
     public ContactData withGroup(String group) {
         this.group = group;
         return this;
@@ -174,6 +185,10 @@ public class ContactData {
 }
     public ContactData withEmail2(String email2) {
         this.email2 = email2;
+        return this;
+    }
+    public ContactData withEmail3(String email3) {
+        this.email3 = email3;
         return this;
     }
 }
