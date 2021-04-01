@@ -7,6 +7,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.Objects;
 
 @Entity
 @Table(name = "addressbook")
@@ -17,11 +18,15 @@ public class ContactData {
     private int id = Integer.MAX_VALUE;
     @Expose
     private String firstname;
+    @Transient
     private String middlename;
     @Expose
     private String lastname;
+    @Transient
     private String nickname;
+    @Transient
     private String company;
+    @Transient
     @Type(type = "text")
     private String address;
     @Expose
@@ -32,6 +37,19 @@ public class ContactData {
     private String mobile;
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactData that = (ContactData) o;
+        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname) && Objects.equals(address, that.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname, address);
+    }
+
+    @Override
     public String toString() {
         return "ContactData{" +
                 "id=" + id +
@@ -39,23 +57,27 @@ public class ContactData {
                 ", lastname='" + lastname + '\'' +
                 '}';
     }
-
+    @Transient
     @Type(type = "text")
     private String work;
     @Transient
     private String group;
+    //@Transient
     @Expose
     @Type(type = "text")
     private String email;
+    //@Transient
     @Expose
     @Type(type = "text")
     private String email2;
+    @Transient
     @Type(type = "text")
     private String email3;
     @Transient
     private String allMails;
-    @Column(name = "photo")
-    @Type(type = "text")
+    @Transient
+    //@Column(name = "photo")
+   // @Type(type = "text")
     private String photo;
     @Transient
     private String allPhones;
@@ -78,26 +100,6 @@ public class ContactData {
     public ContactData withAllPhones(String allPhones) {
         this.allPhones = allPhones;
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ContactData that = (ContactData) o;
-
-        if (id != that.id) return false;
-        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
-        return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        return result;
     }
 
     public int getId () {
