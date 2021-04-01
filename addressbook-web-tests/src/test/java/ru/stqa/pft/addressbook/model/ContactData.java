@@ -4,10 +4,14 @@ import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
+import org.hibernate.sql.Select;
+import org.openqa.selenium.By;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "addressbook")
@@ -35,6 +39,34 @@ public class ContactData {
     @Expose
     @Type(type = "text")
     private String mobile;
+    @Transient
+    @Type(type = "text")
+    private String work;
+
+    //@Transient
+    @Expose
+    @Type(type = "text")
+    private String email;
+    //@Transient
+    @Expose
+    @Type(type = "text")
+    private String email2;
+    @Transient
+    @Type(type = "text")
+    private String email3;
+    @Transient
+    private String allMails;
+    @Transient
+    //@Column(name = "photo")
+    // @Type(type = "text")
+    private String photo;
+    @Transient
+    private String allPhones;
+
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups",
+            joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
 
     @Override
     public boolean equals(Object o) {
@@ -57,30 +89,6 @@ public class ContactData {
                 ", lastname='" + lastname + '\'' +
                 '}';
     }
-    @Transient
-    @Type(type = "text")
-    private String work;
-    @Transient
-    private String group;
-    //@Transient
-    @Expose
-    @Type(type = "text")
-    private String email;
-    //@Transient
-    @Expose
-    @Type(type = "text")
-    private String email2;
-    @Transient
-    @Type(type = "text")
-    private String email3;
-    @Transient
-    private String allMails;
-    @Transient
-    //@Column(name = "photo")
-   // @Type(type = "text")
-    private String photo;
-    @Transient
-    private String allPhones;
 
     public File getPhoto() {
         return new File(photo);
@@ -132,7 +140,6 @@ public class ContactData {
     public String getWork () {
         return work;
     }
-    public String getGroup() { return group; }
     public String getEmail() { return email; }
     public String getEmail2() { return email2; }
     public String getEmail3() { return email3; }
@@ -192,9 +199,12 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withGroup(String group) {
-        this.group = group;
-        return this;
+    public Groups getGroups() {
+        return new Groups(groups);
+    }
+
+    public void setGroups(Set<GroupData> groups) {
+        this.groups = groups;
     }
 
     public ContactData withEmail(String email) {
@@ -207,6 +217,11 @@ public class ContactData {
     }
     public ContactData withEmail3(String email3) {
         this.email3 = email3;
+        return this;
+    }
+
+    public ContactData inGroup(GroupData group) {
+        groups.add(group);
         return this;
     }
 }
