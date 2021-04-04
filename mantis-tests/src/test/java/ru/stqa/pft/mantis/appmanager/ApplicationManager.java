@@ -11,8 +11,12 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import static org.openqa.selenium.remote.BrowserType.CHROME;
+import static org.openqa.selenium.remote.BrowserType.FIREFOX;
+
 
 public class ApplicationManager {
+
     private final Properties properties;
     private WebDriver wd;
 
@@ -21,6 +25,9 @@ public class ApplicationManager {
     private FtpHelper ftp;
     private MailHelper mailHelper;
     private JamesHelper jamesHelper;
+    private SessionHelper sessionHelper;
+    private DataHelper dataHelper;
+    private DbHelper dbHelper;
 
 
     public ApplicationManager(String browser) {
@@ -32,6 +39,7 @@ public class ApplicationManager {
     public void init() throws IOException {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+        dbHelper = new DbHelper();
     }
 
     public void stop() {
@@ -63,10 +71,10 @@ public class ApplicationManager {
     }
 
     public WebDriver getDriver() {
-        if(wd == null) {
-            if (browser.equals(BrowserType.CHROME)) {
+        if (wd == null) {
+            if (browser.equals(CHROME)) {
                 wd = new ChromeDriver();
-            } else if (browser.equals(BrowserType.FIREFOX)) {
+            } else if (browser.equals(FIREFOX)) {
                 wd = new FirefoxDriver();
             }
 
@@ -88,5 +96,22 @@ public class ApplicationManager {
             jamesHelper = new JamesHelper(this);
         }
         return jamesHelper;
+    }
+
+    public SessionHelper sessionHelper() {
+        if (sessionHelper == null) {
+            sessionHelper = new SessionHelper(this);
+        }
+        return sessionHelper;
+    }
+    public DataHelper dataHelper() {
+        if (dataHelper == null) {
+            dataHelper = new DataHelper(this);
+        }
+        return dataHelper;
+    }
+
+    public DbHelper db() {
+        return dbHelper;
     }
 }

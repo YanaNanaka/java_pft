@@ -12,12 +12,11 @@ import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class HttpSession {
+
     private CloseableHttpClient httpclient;
     private ApplicationManager app;
 
@@ -31,12 +30,18 @@ public class HttpSession {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("username", username));
         params.add(new BasicNameValuePair("password", password));
-        params.add(new BasicNameValuePair("securesession", "on"));
-        params.add(new BasicNameValuePair("return", "index.php"));
+        params.add(new BasicNameValuePair("secure_session", "on"));
         post.setEntity(new UrlEncodedFormEntity(params));
         CloseableHttpResponse response = httpclient.execute(post);
         String body = getTextForm(response);
-        return body.contains(String.format("<a href=\"/mantisbt-2.25.0/account_page.php\">%s</a>", username));
+        return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
+    }
+
+    public boolean logout() throws Exception {
+        HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "logout_page.php");
+        CloseableHttpResponse response = httpclient.execute(get);
+        String body = getTextForm(response);
+        return body.contains("<div class=\"login-logo\">");
     }
 
     private String getTextForm(CloseableHttpResponse response) throws Exception{
@@ -52,6 +57,6 @@ public class HttpSession {
         HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "account_page.php");
         CloseableHttpResponse response = httpclient.execute(get);
         String body = getTextForm(response);
-        return body.contains(String.format("<span class=\"label hidden-xs label-default arrowed\">%s</span>", username));
+        return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
     }
 }

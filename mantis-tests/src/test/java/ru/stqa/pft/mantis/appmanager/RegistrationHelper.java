@@ -1,6 +1,11 @@
 package ru.stqa.pft.mantis.appmanager;
 
 import org.openqa.selenium.By;
+import ru.lanwen.verbalregex.VerbalExpression;
+import ru.stqa.pft.mantis.model.MailMessage;
+
+import java.util.List;
+import java.util.Optional;
 
 
 public class RegistrationHelper extends  HelperBase {
@@ -18,11 +23,17 @@ public class RegistrationHelper extends  HelperBase {
     }
 
 
-    public void finish(String confirmationLink, String password) {
+    public void finish(String confirmationLink, String password, String name) {
         wd.get(confirmationLink);
+        type(By.name("realname"), name);
         type(By.name("password"), password);
         type(By.name("password_confirm"), password);
         click(By.cssSelector("button[type='submit']"));
-        //click(By.cssSelector("input[value='Update User']"));
+    }
+
+    public String findLinkFromMailWithText(List<MailMessage> mailMessages, String email, String text) {
+        Optional<MailMessage> message = mailMessages.stream().filter((m) -> m.to.equals(email) && m.text.contains(text)).findFirst();
+        VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
+        return regex.getText(message.get().text);
     }
 }
