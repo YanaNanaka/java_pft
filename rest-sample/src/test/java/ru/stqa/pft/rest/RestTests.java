@@ -10,22 +10,29 @@ import org.apache.http.message.BasicNameValuePair;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 
-public class RestTests {
+public class RestTests extends TestBase {
 
     @Test
 
     public void testCreateIssue() throws IOException {
-        Set<Issue> oldIssues = getIssues();
-        Issue newIssue = new Issue().withSubject("Test issue").withDescription("New test issue");
-        int issueId = createIssue(newIssue);
-        Set<Issue> newIssues = getIssues();
+        //Set<Issue> oldIssues = getIssues();
+       // Issue newIssue = new Issue().withSubject("Test issue").withDescription("New test issue");
+       // int issueId = createIssue(newIssue);
+       // Set<Issue> newIssues = getIssues();
+       // oldIssues.add(newIssue.withId(issueId));
+       // assertEquals(newIssues, oldIssues);
+        skipIfNotFixed(900);
+        Set<Issue> oldIssues =IssueHelper.getIssues();
+        System.out.println(oldIssues);
+        Issue newIssue = new Issue().withSubject("test issue").withDescription("new test issue");
+        int issueId = IssueHelper.createIssue(newIssue);
         oldIssues.add(newIssue.withId(issueId));
-        assertEquals(newIssues, oldIssues);
+        Set<Issue> newIssues = IssueHelper.getIssues();
+        assertEquals(newIssues,oldIssues);
     }
 
 
