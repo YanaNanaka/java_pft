@@ -24,7 +24,7 @@ public class SoapTests extends TestBase {
     }
 
     @Test
-    public void testCreateIssue() throws MalformedURLException, ServiceException, RemoteException {
+    public void testCreateIssue() throws MalformedURLException, ServiceException, RemoteException, com.google.protobuf.ServiceException {
         skipIfNotFixed(0000002);
         Set<Project> projects = app.soap().getProjects();
          Issue issue = new Issue()

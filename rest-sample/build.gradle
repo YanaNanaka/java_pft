@@ -1,0 +1,16 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.testng:testng:7.0.0'
+    implementation 'org.immutables:gson:2.8.9-ea-1'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.11'
+    implementation 'org.apache.httpcomponents:fluent-hc:4.5.11'
+}
+
+test {
+    useTestNG()
+}
