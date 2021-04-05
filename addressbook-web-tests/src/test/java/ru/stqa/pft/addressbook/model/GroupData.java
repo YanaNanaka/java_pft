@@ -9,8 +9,8 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@XStreamAlias("group")
 @Entity
+@XStreamAlias("group")
 @Table(name = "group_list")
 public class GroupData {
     @XStreamOmitField
