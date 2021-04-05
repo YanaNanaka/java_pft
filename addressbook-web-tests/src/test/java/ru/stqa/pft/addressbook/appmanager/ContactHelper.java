@@ -152,6 +152,13 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.xpath(String.format("//select[@name='to_group']/option[@value='%s']", group.getId()))).click();
     }
 
+    public void selectGroup(Contacts contactData) {
+        if (contactData.iterator().next().getGroups().size() > 1) {
+            Assert.assertTrue(contactData.iterator().next().getGroups().size() == 1);
+            new Select(wd.findElement(By.name("group"))).selectByVisibleText(contactData.iterator().next().getGroups().iterator().next().getName());
+        }
+    }
+
     public void selectContactInGroup(ContactData contact) {
         click(By.xpath(String.format("//input[@type='checkbox']", contact.getId())));
     }
