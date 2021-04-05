@@ -187,6 +187,14 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.name("group")).click();
     }
 
+    public void selectContactWithoutGroup(ContactData contact) {
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText("[none]");
+        click(By.xpath(String.format("//input[@type='checkbox']", contact.getId())));
+    }
+
+    public void selectContact(ContactData contact) {
+        click(By.xpath(String.format("//input[@type='checkbox']", contact.getId())));
+    }
 }
 
 
