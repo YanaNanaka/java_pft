@@ -8,6 +8,8 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import static org.testng.Assert.assertTrue;
+
 
 public class ContactAddToGroupTests extends TestBase {
     @BeforeMethod
@@ -21,28 +23,30 @@ public class ContactAddToGroupTests extends TestBase {
         if (app.db().contacts().size() == 0) {
             app.contact().create(new ContactData().withFirstname("Иван").withMiddlename("Иванович").
                     withLastname("Иванов").withNickname("Ванька").withCompany("КиТ").withAddress("Москва, ул. Лесная, д. 7").
-                    withHome("552233").withMobile("89632541789").inGroup(groups.iterator().next()), true);
+                    withHome("552233").withMobile("89632541789"), true);
         }
-        Contacts contacts = app.db().contacts();
-        if(contacts.stream().iterator().next().getGroups().size() == 0) {
-            app.contact().selectContactById(contacts.iterator().next().getId());
-            app.contact().selectGroup(contacts);
-            app.contact().addContactToGroup();
             app.goTo().homePage();
+            if (app.db().contactWithoutGroups().size() == 0) {
+                app.goTo().homePage();
+                app.contact().create(new ContactData().withFirstname("Иван").withMiddlename("Иванович").
+                        withLastname("Иванов").withNickname("Ванька").withCompany("КиТ").withAddress("Москва, ул. Лесная, д. 7").
+                        withHome("552233").withMobile("89632541789"), true);
+            }
         }
-    }
+
 
     @Test
     public void testAddToGroup() {
-        ContactData contactData = app.db().contactNotInGroup();
+        ContactData before = app.db().contactNotInGroup();
         Groups groups = app.db().groups();
         GroupData group = groups.iterator().next();
         app.contact().selectNone();
-        app.contact().selectContactNotGroup(contactData);
+        app.contact().selectContactNotGroup(before);
         app.contact().selectGroup(group);
         app.contact().addContactToGroup();
-        ContactData contactAfter = app.db().contactById(contactData.getId());
-        AssertJUnit.assertTrue(contactAfter.getGroups().contains(group));
+        ContactData after = app.db().contactById(before.getId());
+        assertTrue(after.getGroups().contains(group));
+        verifyContactListInUI();
     }
 }
 
