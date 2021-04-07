@@ -1,6 +1,5 @@
 package ru.stqa.pft.mantis.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -22,15 +21,13 @@ public class ChangePasswordTests extends TestBase {
     @BeforeMethod
     public void before() {
         app.mail().start();
-
-
     }
 
     @Test
     public void testLoginAfterChangedPassword() throws Exception {
         Users users = app.db().users();
         Optional<UserData> user = users
-                .stream()
+                .stream().filter((f) -> f.getUsername() != "administrator")
                 .findAny();
         assertTrue(user.isPresent());
         app.dataHelper().loginUI();
@@ -50,5 +47,4 @@ public class ChangePasswordTests extends TestBase {
     public void after() throws MessagingException {
         app.mail().stop();
     }
-
 }
